@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote Generator</title>
+    <link rel="stylesheet" href="quote.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-quote-left"></i>
+                <h1>Quote By Ninja</h1>
+                <i class="fa-solid fa-quote-right"></i>
+            </div>
+        </header>
+        
+        <div class="quote-container">
+            <div class="quote-content">
+                <div class="msg">
+                    <p id="quote-text"></p>
+                </div>
+                <div class="author">
+                    <p id="author-text"></p>
+                </div>
+                <div class="category">
+                    <span id="category-badge"></span>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button id="new-quote-btn">
+                    <i class="fas fa-sync-alt"></i> New Quote
+                </button>
+                <button id="share-btn">
+                    <i class="fas fa-share-alt"></i> Share
+                </button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Created with <i class="fas fa-heart"></i> by Ninja Quote</p>
+        </footer>
+    </div>
+
+    <script src="api.js"></script>
+</body>
+</html>
