@@ -42,13 +42,6 @@ const setLoadingState = (isLoading) => {
     }
 };
 
-// Show error message
-const showError = (message) => {
-    quoteText.innerText = message;
-    authorText.innerText = '';
-    categoryBadge.innerText = 'error';
-};
-
 // Share functionality
 const shareQuote = () => {
     const quote = quoteText.innerText;
@@ -56,7 +49,7 @@ const shareQuote = () => {
     
     if (navigator.share) {
         navigator.share({
-            title: 'Quote By Ninja',
+            title: 'Quote For the Day',
             text: `"${quote}" — ${author}`,
         })
         .catch(console.error);
