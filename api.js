@@ -16,12 +16,31 @@ const options = {
 
 // Fetch quote from API
 const fetchQuote = async () => {
-    setLoadingState(true);
-    const response = await fetch(url, options);
-    const result = await response.json();
-    updateQuote(result[0]);
-    setLoadingState(false);
-
+    try {
+        // Show loading state
+        setLoadingState(true);
+        
+        const response = await fetch(url, options);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        
+        if (result && result.length > 0) {
+            updateQuote(result[0]);
+        } else {
+            throw new Error('No quotes received');
+        }
+        
+    } catch (error) {
+        console.error("Failed to fetch quote:", error);
+        showError("Failed to load quote. Please try again later.");
+    } finally {
+        // Hide loading state
+        setLoadingState(false);
+    }
 };
 
 // Update the UI with a new quote
@@ -29,6 +48,18 @@ const updateQuote = (quoteData) => {
     quoteText.innerText = quoteData.quote;
     authorText.innerText = quoteData.author;
     categoryBadge.innerText = quoteData.category;
+    
+    // Add animation class to make the transition smooth
+    quoteText.classList.add('fade-in');
+    authorText.classList.add('fade-in');
+    categoryBadge.classList.add('fade-in');
+    
+    // Remove animation class after animation completes
+    setTimeout(() => {
+        quoteText.classList.remove('fade-in');
+        authorText.classList.remove('fade-in');
+        categoryBadge.classList.remove('fade-in');
+    }, 500);
 };
 
 // Set loading state
@@ -42,6 +73,13 @@ const setLoadingState = (isLoading) => {
     }
 };
 
+// Show error message
+const showError = (message) => {
+    quoteText.innerText = message;
+    authorText.innerText = '';
+    categoryBadge.innerText = 'error';
+};
+
 // Share functionality
 const shareQuote = () => {
     const quote = quoteText.innerText;
@@ -49,7 +87,7 @@ const shareQuote = () => {
     
     if (navigator.share) {
         navigator.share({
-            title: 'Quote For the Day',
+            title: '<Quote For the Day!',
             text: `"${quote}" — ${author}`,
         })
         .catch(console.error);
